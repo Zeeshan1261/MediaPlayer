@@ -40,6 +40,7 @@
 margin: 50px;
 width: 300px;
 height: 300px;
+border-radius:10px;
 }
 body{
   background-color: #282c34;
@@ -47,8 +48,11 @@ body{
 }
 .prev{
   background-color: grey;
-  border-radius: 50px;
+  border-radius: 200px;
   font-size: 30px;
+  color: darkgreen;
+  border-color: orange;
+
 }
 .h1{
   color: darkgreen;
@@ -56,5 +60,27 @@ body{
 .next{
   background-color: grey;
   border-radius: 50px;
+  border-color: orange;
   font-size: 30px;
+  color: darkgreen;
+}
+.buttons{
+background-color: #282c34;
+width: 350px;
+border-radius: 50px;    
+margin-left: 450px;
+}
+.play{
+  background-color: grey;
+  border-radius: 50px;
+  border-color: orange;
+  font-size: 30px;
+  color: darkgreen;
+} 
+.pause{
+  background-color: grey;
+  border-radius: 50px;
+  border-color: orange;
+  font-size: 30px;
+  color: darkgreen;
 }

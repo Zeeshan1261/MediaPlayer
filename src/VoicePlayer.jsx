@@ -4,6 +4,8 @@ import {GiPreviousButton} from 'react-icons/gi'
 import {GiNextButton} from 'react-icons/gi'
 import {BsPlayCircle} from 'react-icons/bs'
 import {BsPauseCircle} from 'react-icons/bs'
+import {BsSearch} from 'react-icons/bs'
+import {ProgressBar} from 'audio-progress-bar';
 function Voiceplayer() {
 const myAudio = [
 './songs/sing.mp3',
@@ -19,26 +21,13 @@ const pictures = [
 '/pictures/song3.jpeg',
 '/pictures/song5.jpeg'
 ]
-const [increase,setincrease] = useState(0)
-const [song,setsong] = useState(myAudio[increase])
-const [data,setdata] = useState(pictures[increase]) 
-console.log(song);   
-const add = ()=> {
-setincrease(increase+1)
-setsong(myAudio[increase])
-setdata(pictures[increase])
-}
-console.log(increase);
-const prev = ()=> {
-setincrease(increase-1)
-setsong(myAudio[increase])
-setdata(pictures[increase])
-}   
+let tempt = 0
+const [currentindex,setcurrentindex] = useState(0)
+
 const myRef = useRef()
 const [playing,setplaying] = useState(false)
 
 useEffect(()=> {
-
 if(playing)  {
 myRef.current.play()
     } 
@@ -46,18 +35,57 @@ else{
 myRef.current.pause()
     }
 })
+const next = ()=> {
+    
+setcurrentindex(()=> {
+let tempt = currentindex 
+tempt ++
+if(tempt > myAudio.length-1) {
+tempt = 0
+}
+return tempt
+})
+
+}
+const prev = ()=> {
+    
+setcurrentindex(()=> {
+let tempt = currentindex 
+tempt --
+if(tempt < 0) {
+tempt = myAudio.length -1
+}
+return tempt
+})
+}
+
+const forward = ()=> {
+setcurrentindex(currentindex+1)
+if(currentindex>= myAudio.length -1) {
+setcurrentindex(0)
+}
+}
+const backward = ()=> {
+
+setcurrentindex(currentindex-1)
+if(currentindex<= 0) {
+setcurrentindex(myAudio.length -1)
+       
+}
+}
 
 return(
 <>
-<img alt="" className="dataimg"src={data}/><br></br> 
-<audio className="myaudio" controls  
-src={song} ref={myRef}  type={'audio/mp3'}/><br></br>
+{/* <button className="searchbtn" ><BsSearch/></button> <br></br> */}
+<img alt="" className="dataimg"src={pictures[currentindex]}/><br></br> 
+<audio className="myaudio"  controls  
+src={myAudio[currentindex]} ref={myRef}  type={'audio/mp3'}/><br></br>
 <div className="buttons">
 <h1 className="h1">Ubuntu Player<GrSpotify/></h1>
-<button onClick={()=> prev()} className="prev"><GiPreviousButton/></button>
+<button onClick={()=> backward()}  className="prev"><GiPreviousButton/></button>
 <button onClick={()=> setplaying(!playing)} className="play">{playing ? <BsPauseCircle/>:<BsPlayCircle/>}</button>
-{/* <button onClick={()=> pause()}className="pause"><FaPauseCircle/></button> */}
-<button onClick={()=> add()}  className="next"> <GiNextButton/></button>
+<button onClick={()=> forward()}  className="next"> <GiNextButton/></button>
+{/* <input  className="range" type={'range'} min={1000} max={10000}/> */}
 </div>
 </>
 )
